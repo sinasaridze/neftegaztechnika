@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)y-h67r+%!-lpuql+@0=al)7i6y362q7bna0=b3kahluo=ht4a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['neftegaztechnika.az', 'www.neftegaztechnika.az', '.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -137,3 +137,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
