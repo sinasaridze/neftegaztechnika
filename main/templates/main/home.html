@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нефтегазтехника (НГТ) - производство пакерно-якорного оборудования</title>
+    <meta name="description" content="Научно-техническое предприятие “Нефтегазтехника”">
+        {% load static %}
+    <style>
+        /* Basic reset and styles */
+        /* Basic reset and styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            line-height: 1.6;
+            color: #3e3232;
+            background-color: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-top {
+            background-color: #efefef;
+            padding: 5px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+        
+        .logo img {
+            height: 85px;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .main-nav a {
+            text-decoration: none;
+            color: #3e3232;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .main-nav a:hover {
+            color: #803d3b;
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .phone {
+            color: #3e3232;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* Hero section */
+        .hero {
+            margin-top: 120px;
+            padding: 60px 0;
+            background: linear-gradient(135deg, #efefef 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+        }
+        
+        .slides-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide {
+            position: absolute;
+            transition: all 0.8s ease-in-out;
+            border-radius: 15px;
+            overflow: visible;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            filter: blur(3px);
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide.prev {
+            left: 5%;
+            transform: translateX(-30%);
+        }
+        
+        .slide.active {
+            left: 50%;
+            transform: translateX(-50%);
+            filter: blur(0);
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .slide.next {
+            left: 95%;
+            transform: translateX(-70%);
+        }
+        
+        .slide-img {
+            width: auto;
+            height: auto;
+            max-width: none;
+            max-height: none;
+            display: block;
+            object-fit: contain;
+        }
+        
+        /* Увеличиваем оригинальный размер изображений без растягивания */
+        .slide.prev .slide-img {
+            transform: scale(1.2);
+        }
+        
+        .slide.active .slide-img {
+            transform: scale(1.5);
+        }
+        
+        .slide.next .slide-img {
+            transform: scale(1.2);
+        }
+        
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 3;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #803d3b;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #3e3232;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #803d3b;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3e3232;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .slider-dot.active {
+            background-color: #803d3b;
+            transform: scale(1.2);
+        }
+        
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: #803d3b;
+            z-index: 3;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .slider-arrow:hover {
+            background-color: #ffffff;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev {
+            left: 10%;
+        }
+        
+        .next {
+            right: 10%;
+        }
+        
+        /* Products section */
+        .products {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #803d3b;
+            margin-bottom: 50px;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-card h3 {
+            color: #803d3b;
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #3e3232;
+            color: #efefef;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #efefef;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(239,239,239,0.6);
+            font-size: 14px;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #3e3232;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: row;
+            }
+
+            .main-nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                flex-direction: column;
+                gap: 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                z-index: 1001;
+            }
+
+            .main-nav ul.show {
+                display: flex;
+            }
+
+            .main-nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .main-nav ul li a {
+                display: block;
+                padding: 15px 20px;
+                border-bottom: 1px solid #efefef;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                margin-top: 80px;
+            }
+            
+            .hero-slider {
+                height: 500px;
+            }
+            
+            .slide.active .slide-img {
+                transform: scale(1.3);
+            }
+            
+            .slide.prev .slide-img,
+            .slide.next .slide-img {
+                transform: scale(1.1);
+            }
+            
+            .hero-content {
+                padding: 20px;
+                max-width: 90%;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .prev {
+                left: 5%;
+            }
+            
+            .next {
+                right: 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-slider {
+                height: 400px;
+            }
+            
+            .slide.active .slide-img {
+                transform: scale(1.2);
+            }
+            
+            .slide.prev .slide-img,
+            .slide.next .slide-img {
+                transform: scale(1.0);
+            }
+            
+            .hero-content {
+                padding: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero p {
+                font-size: 0.9rem;
+            }
+            
+            .slider-arrow {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="{% static 'img/logos.jpeg' %}" alt="Нефтегазтехника">
+                        </a>
+                    </div>
+                    
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="/catalog">Каталог продукции</a></li>
+                            <li><a href="/about">О компании</a></li>
+                            <li><a href="/services">Услуги</a></li>
+                            <li><a href="/contacts">Контакты</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <div class="contact-info">
+                        <a href="mail:info@neftegastechnika.com" class="Email">info@neftegastechnika.com</a>
+                        <button class="mobile-menu-btn">☰</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider">
+            <div class="slides-container">
+                <!-- Слайды с изображениями -->
+                <div class="slide prev">
+                    <img src="{% static 'img/hero1.jpg' %}" alt="Нефтегазовое оборудование" class="slide-img">
+                </div>
+                <div class="slide active">
+                    <img src="{% static 'img/hero2.jpg' %}" alt="Производство оборудования" class="slide-img">
+                </div>
+                <div class="slide next">
+                    <img src="{% static 'img/hero3.jpg' %}" alt="Пакерно-якорное оборудование" class="slide-img">
+                </div>
+            </div>
+            
+
+            <!-- Стрелки для навигации -->
+            <button class="slider-arrow prev">❮</button>
+            <button class="slider-arrow next">❯</button>
+            
+            <!-- Точки для навигации -->
+            <div class="slider-controls">
+                <div class="slider-dot active" data-slide="0"></div>
+                <div class="slider-dot" data-slide="1"></div>
+                <div class="slider-dot" data-slide="2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Наша продукция</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3>Пакеры</h3>
+                    <p>Высококачественные пакеры для нефтяной и газовой промышленности</p>
+                </div>
+                <div class="product-card">
+                    <h3>Якорное оборудование</h3>
+                    <p>Надежное якорное оборудование для различных условий эксплуатации</p>
+                </div>
+                <div class="product-card">
+                    <h3>Компоновки</h3>
+                    <p>Комплексные решения для нефтегазового оборудования</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@neftegastechnika.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Услуги</h3>
+                    <a href="/services">Инженерное сопровождение</a>
+                    <a href="/services">Разработка оборудования</a>
+                    <a href="/services">Сервисное обслуживание</a>
+                    <a href="/services">Канатные работы</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Компания</h3>
+                    <a href="/about">О нас</a>
+                    <a href="/catalog">Каталог</a>
+                    <a href="/contacts">Контакты</a>
+                    <a href="/services">Услуги</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 «Нефтегазтехника». Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // Mobile menu functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mainNav = document.querySelector('.main-nav ul');
+        
+        if (mobileMenuBtn && mainNav) {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function(event) {
+                event.stopPropagation();
+                mainNav.classList.toggle('show');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mainNav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                    mainNav.classList.remove('show');
+                }
+            });
+            
+            // Prevent menu closing when clicking on navigation links
+            document.querySelectorAll('.main-nav a').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    // Close mobile menu after clicking a link
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('show');
+                    }
+                });
+            });
+        }
+        
+        // Slider functionality
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const prevBtn = document.querySelector('.slider-arrow.prev');
+        const nextBtn = document.querySelector('.slider-arrow.next');
+        let currentSlide = 1; // Start with middle slide active
+        let slideInterval;
+        
+        // Function to update slider positions
+        function updateSlider() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('prev', 'active', 'next');
+                
+                if (index === (currentSlide - 1 + slides.length) % slides.length) {
+                    slide.classList.add('prev');
+                } else if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index === (currentSlide + 1) % slides.length) {
+                    slide.classList.add('next');
+                }
+            });
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                }
+            });
+        }
+        
+        // Function to show next slide
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        }
+        
+        // Function to show previous slide
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlider();
+        }
+        
+        // Event listeners for navigation arrows
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', function() {
+                prevSlide();
+                resetInterval();
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                nextSlide();
+                resetInterval();
+            });
+        }
+        
+        // Event listeners for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+                resetInterval();
+            });
+        });
+        
+        // Auto-advance slides every 5 seconds
+        function startInterval() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+        
+        // Reset interval when user interacts with slider
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+        
+        // Initialize slider
+        updateSlider();
+        
+        // Start the auto-advance
+        startInterval();
+        
+        // Pause auto-advance when hovering over slider
+        const slider = document.querySelector('.hero-slider');
+        if (slider) {
+            slider.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                startInterval();
+            });
+        }
+    });
+</script>
+</body>
+</html>

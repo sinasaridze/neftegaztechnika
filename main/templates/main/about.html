@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О компании</title>
+    {% load static %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #3e3232;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: #fff;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            background-color: #efefef;
+            padding: 5px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .logo img {
+            height: 85px;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #3e3232;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: #803d3b;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .phone {
+            color: #3e3232;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #3e3232;
+        }
+
+        /* About Section */
+        .about {
+            padding: 180px 0 80px;
+            background: #fff;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .about-header h1 {
+            font-size: 36px;
+            color: #3e3232;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .about-header p {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .about-card {
+            background: #f8f8f8;
+            padding: 40px 30px;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-card h3 {
+            font-size: 20px;
+            color: #3e3232;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .about-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #3e3232;
+            color: #efefef;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #efefef;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(239,239,239,0.6);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                gap: 15px;
+            }
+
+            .main-nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                flex-direction: column;
+                gap: 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+            }
+
+            .main-nav ul.show {
+                display: flex;
+            }
+
+            .main-nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .main-nav ul li a {
+                display: block;
+                padding: 15px 20px;
+                border-bottom: 1px solid #efefef;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .about {
+                padding: 140px 0 60px;
+            }
+
+            .about-header h1 {
+                font-size: 28px;
+            }
+
+            .about-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="{% static 'img/logos.jpeg' %}" alt="Нефтегазтехника">
+                        </a>
+                    </div>
+                    
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="/catalog">Каталог продукции</a></li>
+                            <li><a href="/about" class="active">О компании</a></li>
+                            <li><a href="/services">Услуги</a></li>
+                            <li><a href="/contacts">Контакты</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <div class="contact-info">
+                        <a href="mail:info@neftegastechnika.com" class="Email">info@neftegastechnika.com</a>
+                        <button class="mobile-menu-btn">☰</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-header">
+                <h1>О компании</h1>
+                <p>«Нефтегазтехника» – лидер в области инженерных решений для нефтегазовой отрасли. Опытная команда специалистов обеспечивает полный цикл от разработки оборудования до сервисного обслуживания.</p>
+            </div>
+
+
+                <div class="about-card">
+                    <h3>Основные направления</h3>
+                    <p>Научные, конструкторские, программные, технологические и технические разработки в области добычи нефти и газа, шефмонтажные работы, сервисное обслуживание, металлообработка, производство канатных инструментов, многопакерных компоновок и пакерно-якорного оборудования.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@neftegastechnika.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Услуги</h3>
+                    <a href="/services">Инженерное сопровождение</a>
+                    <a href="/services">Разработка оборудования</a>
+                    <a href="/services">Сервисное обслуживание</a>
+                    <a href="/services">Канатные работы</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Компания</h3>
+                    <a href="/about">О нас</a>
+                    <a href="/catalog">Каталог</a>
+                    <a href="/contacts">Контакты</a>
+                    <a href="/services">Услуги</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 «Нефтегазтехника». Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // Mobile menu functionality
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function(event) {
+        event.stopPropagation();
+        const nav = document.querySelector('.main-nav ul');
+        nav.classList.toggle('show');
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const nav = document.querySelector('.main-nav ul');
+        const btn = document.querySelector('.mobile-menu-btn');
+        
+        if (!nav.contains(event.target) && !btn.contains(event.target)) {
+            nav.classList.remove('show');
+        }
+    });
+
+    // Prevent menu closing when clicking on navigation links
+    document.querySelectorAll('.main-nav a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.stopPropagation();
+            // Close mobile menu after clicking a link
+            if (window.innerWidth <= 768) {
+                document.querySelector('.main-nav ul').classList.remove('show');
+            }
+        });
+    });
+
+    // Prevent menu closing when clicking on about cards
+    document.querySelectorAll('.about-card').forEach(card => {
+        card.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    });
+
+    // Prevent menu closing when clicking on footer links
+    document.querySelectorAll('.footer-section a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты</title>
+    {% load static %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #3e3232;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: #fff;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            background-color: #efefef;
+            padding: 5px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .logo img {
+            height: 85px;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #3e3232;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: #803d3b;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .phone {
+            color: #3e3232;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #3e3232;
+        }
+
+        /* Contact Section */
+        .contacts {
+            padding: 180px 0 80px;
+            background: #fff;
+        }
+
+        .contacts-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .contacts-header h1 {
+            font-size: 36px;
+            color: #3e3232;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .contacts-header p {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .contact-card {
+            background: #f8f8f8;
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .contact-card h3 {
+            font-size: 20px;
+            color: #3e3232;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .contact-card p,
+        .contact-card a {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .contact-card a:hover {
+            color: #803d3b;
+        }
+
+        /* Footer */
+        footer {
+            background: #3e3232;
+            color: #efefef;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #efefef;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(239,239,239,0.6);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                gap: 15px;
+            }
+
+            .main-nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                flex-direction: column;
+                gap: 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+            }
+
+            .main-nav ul.show {
+                display: flex;
+            }
+
+            .main-nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .main-nav ul li a {
+                display: block;
+                padding: 15px 20px;
+                border-bottom: 1px solid #efefef;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .contacts {
+                padding: 140px 0 60px;
+            }
+
+            .contacts-header h1 {
+                font-size: 28px;
+            }
+
+            .contact-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="{% static 'img/logos.jpeg' %}" alt="Нефтегазтехника">
+                        </a>
+                    </div>
+                    
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="/catalog">Каталог продукции</a></li>
+                            <li><a href="/about">О компании</a></li>
+                            <li><a href="/services">Услуги</a></li>
+                            <li><a href="/contacts" class="active">Контакты</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <div class="contact-info">
+                        <a href="mail:info@neftegastechnika.com" class="Email">info@neftegastechnika.com</a>
+                        <button class="mobile-menu-btn">☰</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contacts Section -->
+    <section class="contacts">
+        <div class="container">
+            <div class="contacts-header">
+                <h1>Контакты</h1>
+                <p>Свяжитесь с нами удобным для вас способом или оставьте заявку, и наши специалисты перезвонят вам.</p>
+            </div>
+<!--
+            <div class="contacts-grid">
+                <div class="contact-card">
+                    <h3>Гахир Маммедов</h3>
+                    <p>Руководитель научно-исследовательского отдела</p>
+                    <p>+994 (50) 642 - 84 - 39</p>
+                    <a href="mailto:g.mammadov@heftegastechnika.com">g.mammadov@heftegastechnika.com</a>
+                    <p>Азербайджан, г. Баку, ул. Шафаат Мехтиева, д. 9F</p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>Зияфат Халилов</h3>
+                    <p>Главный конструктор</p>
+                    <p>+994 (50) 624 - 45 - 60</p>
+                    <a href="mailto:z.khalilov@heftegastechnika.com">z.khalilov@heftegastechnika.com</a>
+                    <p>Азербайджан, г. Баку, ул. Шафаат Мехтиева, д. 9F</p>
+                </div>
+
+                <div class="contact-card">
+                    <h3>Руфат Аббасов</h3>
+                    <p>Генеральный директор</p>
+                    <p>+994 (51) 343 - 00 - 40</p>
+                    <a href="mailto:r.abbasov@heftegastechnika.com">r.abbasov@heftegastechnika.com</a>
+                    <p>Азербайджан, г. Баку, ул. Шафаат Мехтиева, д. 9F</p>
+                </div>
+            </div>
+        -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@neftegastechnika.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Услуги</h3>
+                    <a href="/services">Инженерное сопровождение</a>
+                    <a href="/services">Разработка оборудования</a>
+                    <a href="/services">Сервисное обслуживание</a>
+                    <a href="/services">Канатные работы</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Компания</h3>
+                    <a href="/about">О нас</a>
+                    <a href="/catalog">Каталог</a>
+                    <a href="/contacts">Контакты</a>
+                    <a href="/services">Услуги</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 «Нефтегазтехника». Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function(event) {
+            event.stopPropagation();
+            const nav = document.querySelector('.main-nav ul');
+            nav.classList.toggle('show');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('.main-nav ul');
+            const btn = document.querySelector('.mobile-menu-btn');
+            
+            if (!nav.contains(event.target) && !btn.contains(event.target)) {
+                nav.classList.remove('show');
+            }
+        });
+
+        // Prevent menu closing when clicking on navigation links
+        document.querySelectorAll('.main-nav a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.stopPropagation();
+                // Close mobile menu after clicking a link
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.main-nav ul').classList.remove('show');
+                }
+            });
+        });
+
+        // Prevent menu closing when clicking on contact cards
+        document.querySelectorAll('.contact-card').forEach(card => {
+            card.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        });
+
+        // Prevent menu closing when clicking on contact links
+        document.querySelectorAll('.contact-card a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        });
+
+        // Prevent menu closing when clicking on footer links
+        document.querySelectorAll('.footer-section a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>
