@@ -1,64 +1,80 @@
 from django.shortcuts import render
 from .models import Product
 
-def home(request):
-    """Главная страница"""
-    return render(request, 'main/home.html')
+# Русская версия
+def home_ru(request):
+    return render(request, 'main/ru/home.html')
 
-def catalog(request):
-    """Страница каталога продукции"""
-    category = request.GET.get('category', '')
-    search_query = request.GET.get('search', '')
-    
+def catalog_ru(request):
     products = Product.objects.filter(is_active=True)
     
-    if category:
-        products = products.filter(category=category)
+    # Добавляем локализованные данные к каждому продукту
+    for product in products:
+        product.localized_name = product.get_localized_name('ru')
+        product.localized_short_description = product.get_localized_short_description('ru')
+        product.localized_description = product.get_localized_description('ru')
+        product.localized_features = product.get_localized_features('ru')
+        product.localized_application = product.get_localized_application('ru')
     
-    if search_query:
-        products = products.filter(name__icontains=search_query)
+    return render(request, 'main/ru/catalog.html', {'products': products})
+
+def about_ru(request):
+    return render(request, 'main/ru/about.html')
+
+def services_ru(request):
+    return render(request, 'main/ru/services.html')
+
+def contacts_ru(request):
+    return render(request, 'main/ru/contacts.html')
+
+# Английская версия
+def home_en(request):
+    return render(request, 'main/en/home.html')
+
+def catalog_en(request):
+    products = Product.objects.filter(is_active=True)
     
-    context = {
-        'title': 'Каталог продукции',
-        'products': products,
-        'current_category': category,
-        'search_query': search_query,
-    }
-    return render(request, 'main/catalog.html', context)
+    # Добавляем локализованные данные к каждому продукту
+    for product in products:
+        product.localized_name = product.get_localized_name('en')
+        product.localized_short_description = product.get_localized_short_description('en')
+        product.localized_description = product.get_localized_description('en')
+        product.localized_features = product.get_localized_features('en')
+        product.localized_application = product.get_localized_application('en')
+    
+    return render(request, 'main/en/catalog.html', {'products': products})
 
-def about(request):
-    """Страница о компании"""
-    context = {
-        'title': 'О компании',
-        'company_info': {
-            'name': 'Нефтегазтехника (НГТ)',
-            'description': 'Научно-техническое предприятие, специализирующееся на производстве пакерно-якорного оборудования',
-            'year_founded': '2024'
-        }
-    }
-    return render(request, 'main/about.html', context)
+def about_en(request):
+    return render(request, 'main/en/about.html')
 
-def services(request):
-    """Страница услуг"""
-    context = {
-        'title': 'Услуги',
-        'services': [
-            {'name': 'Производство оборудования', 'description': 'Изготовление пакерно-якорного оборудования'},
-            {'name': 'Техническое обслуживание', 'description': 'Сервисное обслуживание оборудования'},
-            {'name': 'Консультации', 'description': 'Технические консультации специалистов'},
-        ]
-    }
-    return render(request, 'main/services.html', context)
+def services_en(request):
+    return render(request, 'main/en/services.html')
 
-def contacts(request):
-    """Страница контактов"""
-    context = {
-        'title': 'Контакты',
-        'contacts': {
-            'reception_phone': '+7(3466)49-12-15',
-            'sales_phone': '+7(999)549-22-25',
-            'email': 'mail@ngt-nv.ru',
-            'sales_email': 'fatail@ngt-nv.ru'
-        }
-    }
-    return render(request, 'main/contacts.html', context)
+def contacts_en(request):
+    return render(request, 'main/en/contacts.html')
+
+# Азербайджанская версия
+def home_az(request):
+    return render(request, 'main/az/home.html')
+
+def catalog_az(request):
+    products = Product.objects.filter(is_active=True)
+    
+    # Добавляем локализованные данные к каждому продукту
+    for product in products:
+        product.localized_name = product.get_localized_name('az')
+        product.localized_short_description = product.get_localized_short_description('az')
+        product.localized_description = product.get_localized_description('az')
+        product.localized_features = product.get_localized_features('az')
+        product.localized_application = product.get_localized_application('az')
+    
+    return render(request, 'main/az/catalog.html', {'products': products})
+
+def about_az(request):
+    return render(request, 'main/az/about.html')
+
+def services_az(request):
+    return render(request, 'main/az/services.html')
+
+def contacts_az(request):
+    return render(request, 'main/az/contacts.html')

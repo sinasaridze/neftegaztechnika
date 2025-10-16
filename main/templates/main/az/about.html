@@ -1,0 +1,100 @@
+{% extends 'main/az/base.html' %}
+
+{% block title %}Şirkət haqqında{% endblock %}
+
+{% block description %}«Neftqaztexnika» neft-qaz sənayesi üçün mühəndis həllərində lider{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* About Section */
+    .about {
+        padding: 180px 0 80px;
+        background: #fff;
+    }
+
+    .about-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .about-header h1 {
+        font-size: 36px;
+        color: #3e3232;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .about-header p {
+        font-size: 18px;
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .about-card {
+        background: #f8f8f8;
+        padding: 40px 30px;
+        border-radius: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #eee;
+    }
+
+    .about-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .about-card h3 {
+        font-size: 20px;
+        color: #3e3232;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .about-card p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .about {
+            padding: 140px 0 60px;
+        }
+
+        .about-header h1 {
+            font-size: 28px;
+        }
+
+        .about-card {
+            padding: 30px 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- About Section -->
+<section class="about">
+    <div class="container">
+        <div class="about-header">
+            <h1>Şirkət haqqında</h1>
+            <p>«Neftqaztexnika» – neft-qaz sənayesi üçün mühəndis həllərində liderdir. Təcrübəli mütəxəssislər komandası avadanlıqların hazırlanmasından xidmətə qədər tam dövrü təmin edir.</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>Əsas istiqamətlər</h3>
+                <p>Neft və qaz hasilatı sahəsində elmi, konstruktor, proqram, texnoloji və texniki işlər, quraşdırma işləri, xidmət, metal emalı, kəndir alətlərinin istehsalı, çoxpaketli düzəlişlər və paker-anqar avadanlıqlarının istehsalı.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

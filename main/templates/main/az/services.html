@@ -1,0 +1,255 @@
+{% extends 'main/az/base.html' %}
+
+{% block title %}Xidmətlər - Neftqaztexnika (NQT){% endblock %}
+
+{% block description %}Mühəndislik müşayiəti və xidmət saxlanması üzrə peşəkar xidmətlər{% endblock %}
+
+{% block extra_css %}
+
+{% load static %}
+<style>
+    .services {
+        padding: 180px 0 80px;
+        background: #fff;
+    }
+
+    .services-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .services-header h1 {
+        font-size: 36px;
+        color: #3e3232;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .services-header p {
+        font-size: 18px;
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .service-card {
+        background: #f8f8f8;
+        padding: 40px 30px;
+        border-radius: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #eee;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: #803d3b;
+    }
+
+    .service-card h3 {
+        font-size: 20px;
+        color: #3e3232;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .service-card p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .service-features {
+        list-style: none;
+        margin-bottom: 25px;
+    }
+
+    .service-features li {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .service-features li::before {
+        content: '✓';
+        color: #803d3b;
+        font-weight: bold;
+    }
+
+    .service-btn {
+        background: #803d3b;
+        color: #fff;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .service-btn:hover {
+        background: #3e3232;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .consultation-section {
+        background: linear-gradient(135deg, #803d3b 0%, #3e3232 100%);
+        padding: 60px 40px;
+        border-radius: 15px;
+        text-align: center;
+        color: #fff;
+        margin-top: 50px;
+    }
+
+    .consultation-section h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .consultation-section p {
+        font-size: 16px;
+        margin-bottom: 30px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .consultation-btn {
+        background: #fff;
+        color: #803d3b;
+        border: none;
+        padding: 12px 35px;
+        border-radius: 30px;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .consultation-btn:hover {
+        background: #f8f8f8;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+        .services {
+            padding: 140px 0 60px;
+        }
+
+        .services-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .service-card {
+            padding: 30px 20px;
+        }
+
+        .services-header h1 {
+            font-size: 28px;
+        }
+
+        .consultation-section {
+            padding: 40px 20px;
+        }
+
+        .consultation-section h2 {
+            font-size: 24px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Xidmətlər Bölməsi -->
+<section class="services">
+    <div class="container">
+        <div class="services-header">
+            <h1>Xidmətlərimiz</h1>
+            <p>Layihələndirmədən xidmət saxlanmasına qədər neft-qaz sənayesi üçün kompleks həllər</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Mühəndislik müşayiəti</h3>
+                <p>Konsepsiyadan reallaşdırmaya qədər layihələrin tam dövrü mühəndislik müşayiəti</p>
+                <ul class="service-features">
+                    <li>Texniki məsləhət</li>
+                    <li>Layihələndirmə və hesablamalar</li>
+                    <li>Müəllif nəzarəti</li>
+                    <li>İşəsalma və qurğu işləri</li>
+                </ul>
+      
+            </div>
+
+            <div class="service-card">
+                <h3>Avadanlıq hazırlanması</h3>
+                <p>Sifarişçinin fərdi tələblərinə uyğun avadanlıqların yaradılması və modernləşdirilməsi</p>
+                <ul class="service-features">
+                    <li>Konstruktor işləri</li>
+                    <li>Texnoloji işlər</li>
+                    <li>Prototip hazırlanması</li>
+                    <li>Sınaq və sertifikatlaşdırma</li>
+                </ul>
+             
+            </div>
+
+            <div class="service-card">
+                <h3>Xidmət saxlanması</h3>
+                <p>Avadanlıqların zəmanət və zəmanətdən sonra xidməti</p>
+                <ul class="service-features">
+                    <li>Diagnostika və təmir</li>
+                    <li>Texniki xidmət</li>
+                    <li>Avadanlıqların modernləşdirilməsi</li>
+                    <li>Personalın təlimi</li>
+                </ul>
+        
+            </div>
+
+            <div class="service-card">
+                <h3>Kəndir işləri</h3>
+                <p>Kəndir alətləri ilə iş üzrə peşəkar xidmətlər</p>
+                <ul class="service-features">
+                    <li>Kəndir alətlərinin hazırlanması</li>
+                    <li>Xidmət və təmir</li>
+                    <li>Tətbiq üzrə məsləhətlər</li>
+                    <li>Təhlükəsizlik texnikasının öyrədilməsi</li>
+                </ul>
+       
+            </div>
+        </div>
+
+
+</section>
+
+{% endblock %}

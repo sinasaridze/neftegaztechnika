@@ -1,0 +1,443 @@
+{% extends 'main/az/base.html' %}
+
+{% block title %}Neftqaztexnika (NQT) - paker-anqor avadanlıqlarının istehsalı{% endblock %}
+
+{% block description %}“Neftqaztexnika” Elmi-Texniki Müəssisəsi{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<style>
+    /* Hero section */
+    .hero {
+        margin-top: 120px;
+        padding: 60px 0;
+        background: linear-gradient(135deg, #efefef 0%, #ffffff 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-slider {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        overflow: hidden;
+    }
+
+    .slides-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slide {
+        position: absolute;
+        transition: all 0.8s ease-in-out;
+        border-radius: 15px;
+        overflow: visible;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        filter: blur(3px);
+        opacity: 0.7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slide.prev {
+        left: 5%;
+        transform: translateX(-30%);
+    }
+
+    .slide.active {
+        left: 50%;
+        transform: translateX(-50%);
+        filter: blur(0);
+        opacity: 1;
+        z-index: 2;
+    }
+
+    .slide.next {
+        left: 95%;
+        transform: translateX(-70%);
+    }
+
+    .slide-img {
+        width: auto;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        display: block;
+        object-fit: contain;
+    }
+
+    .slide.prev .slide-img {
+        transform: scale(1.2);
+    }
+
+    .slide.active .slide-img {
+        transform: scale(1.5);
+    }
+
+    .slide.next .slide-img {
+        transform: scale(1.2);
+    }
+
+    .hero-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 3;
+        background-color: rgba(255, 255, 255, 0.85);
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 600px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        color: #803d3b;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        color: #3e3232;
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: #803d3b;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #3e3232;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .slider-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 3;
+    }
+
+    .slider-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .slider-dot.active {
+        background-color: #803d3b;
+        transform: scale(1.2);
+    }
+
+    .slider-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.9);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 24px;
+        color: #803d3b;
+        z-index: 3;
+        transition: all 0.3s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .slider-arrow:hover {
+        background-color: #ffffff;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .prev {
+        left: 10%;
+    }
+
+    .next {
+        right: 10%;
+    }
+
+    /* Products section */
+    .products {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2rem;
+        color: #803d3b;
+        margin-bottom: 50px;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .product-card {
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 30px;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-card h3 {
+        color: #803d3b;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .hero {
+            margin-top: 80px;
+        }
+        
+        .hero-slider {
+            height: 500px;
+        }
+        
+        .slide.active .slide-img {
+            transform: scale(1.3);
+        }
+        
+        .slide.prev .slide-img,
+        .slide.next .slide-img {
+            transform: scale(1.1);
+        }
+        
+        .hero-content {
+            padding: 20px;
+            max-width: 90%;
+        }
+        
+        .hero h1 {
+            font-size: 2rem;
+        }
+        
+        .hero p {
+            font-size: 1rem;
+        }
+        
+        .slider-arrow {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+        }
+        
+        .prev {
+            left: 5%;
+        }
+        
+        .next {
+            right: 5%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-slider {
+            height: 400px;
+        }
+        
+        .slide.active .slide-img {
+            transform: scale(1.2);
+        }
+        
+        .slide.prev .slide-img,
+        .slide.next .slide-img {
+            transform: scale(1.0);
+        }
+        
+        .hero-content {
+            padding: 15px;
+        }
+        
+        .hero h1 {
+            font-size: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 0.9rem;
+        }
+        
+        .slider-arrow {
+            width: 35px;
+            height: 35px;
+            font-size: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-slider">
+        <div class="slides-container">
+            <!-- Slaydlər şəkillərlə -->
+            <div class="slide prev">
+                <img src="{% static 'img/hero1.jpg' %}" alt="Neftqaz avadanlığı" class="slide-img">
+            </div>
+            <div class="slide active">
+                <img src="{% static 'img/hero2.jpg' %}" alt="Avadanlıq istehsalı" class="slide-img">
+            </div>
+            <div class="slide next">
+                <img src="{% static 'img/hero3.jpg' %}" alt="Paker-anqor avadanlığı" class="slide-img">
+            </div>
+        </div>
+        
+        <!-- Naviqasiya oxları -->
+        <button class="slider-arrow prev">❮</button>
+        <button class="slider-arrow next">❯</button>
+        
+        <!-- Naviqasiya nöqtələri -->
+        <div class="slider-controls">
+            <div class="slider-dot active" data-slide="0"></div>
+            <div class="slider-dot" data-slide="1"></div>
+            <div class="slider-dot" data-slide="2"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section class="products">
+    <div class="container">
+        <h2 class="section-title">Məhsullarımız</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <h3>Pakerlər</h3>
+                <p>Neft və qaz sənayesi üçün yüksək keyfiyyətli pakerlər</p>
+            </div>
+            <div class="product-card">
+                <h3>Anqor avadanlığı</h3>
+                <p>Müxtəlif istismar şəraiti üçün etibarlı anqor avadanlığı</p>
+            </div>
+            <div class="product-card">
+                <h3>Kompanoflar</h3>
+                <p>Neftqaz avadanlığı üçün kompleks həllər</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Slider funksionallığı
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const prevBtn = document.querySelector('.slider-arrow.prev');
+        const nextBtn = document.querySelector('.slider-arrow.next');
+        let currentSlide = 1; // Ortadaki slaydla başla
+        let slideInterval;
+        
+        function updateSlider() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('prev', 'active', 'next');
+                
+                if (index === (currentSlide - 1 + slides.length) % slides.length) {
+                    slide.classList.add('prev');
+                } else if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index === (currentSlide + 1) % slides.length) {
+                    slide.classList.add('next');
+                }
+            });
+            
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                }
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlider();
+        }
+        
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', function() {
+                prevSlide();
+                resetInterval();
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                nextSlide();
+                resetInterval();
+            });
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+                resetInterval();
+            });
+        });
+        
+        function startInterval() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+        
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+        
+        updateSlider();
+        startInterval();
+        
+        const slider = document.querySelector('.hero-slider');
+        if (slider) {
+            slider.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                startInterval();
+            });
+        }
+    });
+</script>
+{% endblock %}

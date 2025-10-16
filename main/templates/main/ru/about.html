@@ -1,0 +1,100 @@
+{% extends 'main/ru/base.html' %}
+
+{% block title %}О компании{% endblock %}
+
+{% block description %}«Нефтегазтехника» – лидер в области инженерных решений для нефтегазовой отрасли{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* About Section */
+    .about {
+        padding: 180px 0 80px;
+        background: #fff;
+    }
+
+    .about-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .about-header h1 {
+        font-size: 36px;
+        color: #3e3232;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .about-header p {
+        font-size: 18px;
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .about-card {
+        background: #f8f8f8;
+        padding: 40px 30px;
+        border-radius: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #eee;
+    }
+
+    .about-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .about-card h3 {
+        font-size: 20px;
+        color: #3e3232;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .about-card p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .about {
+            padding: 140px 0 60px;
+        }
+
+        .about-header h1 {
+            font-size: 28px;
+        }
+
+        .about-card {
+            padding: 30px 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- About Section -->
+<section class="about">
+    <div class="container">
+        <div class="about-header">
+            <h1>О компании</h1>
+            <p>«Нефтегазтехника» – лидер в области инженерных решений для нефтегазовой отрасли. Опытная команда специалистов обеспечивает полный цикл от разработки оборудования до сервисного обслуживания.</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>Основные направления</h3>
+                <p>Научные, конструкторские, программные, технологические и технические разработки в области добычи нефти и газа, шефмонтажные работы, сервисное обслуживание, металлообработка, производство канатных инструментов, многопакерных компоновок и пакерно-якорного оборудования.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

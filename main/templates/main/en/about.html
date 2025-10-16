@@ -1,0 +1,100 @@
+{% extends 'main/en/base.html' %}
+
+{% block title %}About Company{% endblock %}
+
+{% block description %}"Neftegaztechnika" - a leader in engineering solutions for the oil and gas industry{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* About Section */
+    .about {
+        padding: 180px 0 80px;
+        background: #fff;
+    }
+
+    .about-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .about-header h1 {
+        font-size: 36px;
+        color: #3e3232;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .about-header p {
+        font-size: 18px;
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .about-card {
+        background: #f8f8f8;
+        padding: 40px 30px;
+        border-radius: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid #eee;
+    }
+
+    .about-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .about-card h3 {
+        font-size: 20px;
+        color: #3e3232;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .about-card p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .about {
+            padding: 140px 0 60px;
+        }
+
+        .about-header h1 {
+            font-size: 28px;
+        }
+
+        .about-card {
+            padding: 30px 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- About Section -->
+<section class="about">
+    <div class="container">
+        <div class="about-header">
+            <h1>About Company</h1>
+            <p>"Neftegaztechnika" - a leader in engineering solutions for the oil and gas industry. An experienced team of specialists provides a full cycle from equipment development to service maintenance.</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>Main Directions</h3>
+                <p>Scientific, design, software, technological and technical developments in the field of oil and gas production, installation supervision, service maintenance, metalworking, production of rope tools, multi-packer assemblies and packer-anchor equipment.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

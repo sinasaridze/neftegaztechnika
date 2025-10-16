@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)y-h67r+%!-lpuql+@0=al)7i6y362q7bna0=b3kahluo=ht4a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['neftegastechnika.com', 'www.neftegastechnika.com', '.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -116,7 +117,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
+
+LANGUAGES = [
+    ('ru', 'Русский'),
+    ('en', 'English'),
+    ('az', 'Azərbaycan'),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 
 TIME_ZONE = 'UTC'
 
@@ -137,3 +148,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
