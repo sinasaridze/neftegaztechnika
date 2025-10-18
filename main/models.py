@@ -4,12 +4,13 @@ class Product(models.Model):
     CATEGORY_CHOICES = [
         ('packers', 'Пакеры'),
         ('anchors', 'Якоря'),
-        ('assemblies', 'Компоновки'),
-        ('parts', 'Запчасти'),
+        ('packer assemblies', 'Пакерные компоновки'),
+        ('valves and well chambers', 'Клапаны и скважинные камеры'),
+        ('disconnectors and others', 'Разъединители и другое'),
     ]
 
     category = models.CharField(
-        max_length=20,
+        max_length=32,
         choices=CATEGORY_CHOICES,
         verbose_name='Категория'
     )

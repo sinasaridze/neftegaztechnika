@@ -457,8 +457,9 @@
                 <button class="filter-btn {% if not current_category %}active{% endif %}" data-category="">Все продукты</button>
                 <button class="filter-btn {% if current_category == 'packers' %}active{% endif %}" data-category="packers">Пакеры</button>
                 <button class="filter-btn {% if current_category == 'anchors' %}active{% endif %}" data-category="anchors">Якоря</button>
-                <button class="filter-btn {% if current_category == 'assemblies' %}active{% endif %}" data-category="assemblies">Компоновки</button>
-                <button class="filter-btn {% if current_category == 'parts' %}active{% endif %}" data-category="parts">Запчасти</button>
+                <button class="filter-btn {% if current_category == 'packer assemblies' %}active{% endif %}" data-category="packer assemblies">Пакерные компоновки</button>
+                <button class="filter-btn {% if current_category == 'valves and well chambers' %}active{% endif %}" data-category="valves and well chambers">Клапаны и скважинные камеры</button>
+                <button class="filter-btn {% if current_category == 'disconnectors and others' %}active{% endif %}" data-category="disconnectors and others">Разъединители и другое</button>
             </div>
             <div class="search-box">
                 <form method="get" id="search-form">
@@ -476,10 +477,6 @@
         <div class="catalog-grid" id="catalog-grid">
             {% for product in products %}
             <div class="catalog-item" data-category="{{ product.category }}" data-id="{{ product.id }}">
-                <!-- Бейдж новинки -->
-                {% if product.is_new %}
-                <div class="item-badge">Новинка</div>
-                {% endif %}
                 
                 <!-- Кнопка избранного -->
                 <button class="favorite-btn" data-id="{{ product.id }}">♥</button>

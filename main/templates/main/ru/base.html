@@ -52,6 +52,7 @@
         
         .logo img {
             height: 85px;
+            transition: height 0.3s;
         }
         
         .main-nav ul {
@@ -76,13 +77,32 @@
         .contact-info {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
         
-        .phone {
-            color: #3e3232;
+        .email-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             text-decoration: none;
+            color: #3e3232;
             font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .email-container:hover {
+            background-color: #fff;
+            border-color: #803d3b;
+            color: #803d3b;
+        }
+        
+        .email-icon {
+            font-size: 16px;
         }
 
         /* Google Translate Styles */
@@ -203,10 +223,77 @@
             font-size: 14px;
         }
 
+        /* Language switcher */
+        .language-switcher {
+        position: relative;
+        }
+        
+        .lang-btn {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn:hover {
+            background: #fff;
+            border-color: #803d3b;
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 40px;
+            left: -60px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            min-width: 130px;
+        }
+        
+        .lang-dropdown.show {
+            display: block;
+        }
+        
+        .lang-option {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #3e3232;
+            transition: background 0.3s;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 12px;
+        }
+        
+        .lang-option:last-child {
+            border-bottom: none;
+        }
+        
+        .lang-option:hover {
+            background: #f8f8f8;
+            color: #803d3b;
+        }
+        
+        .lang-option.current {
+            background: #803d3b;
+            color: #fff;
+        }
+
         /* Mobile menu */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: row;
+                flex-wrap: wrap;
             }
 
             .main-nav ul {
@@ -243,97 +330,108 @@
             }
 
             .contact-info {
-                gap: 15px;
+                gap: 10px;
+                margin-left: auto;
+                order: 3;
+                width: 100%;
+                justify-content: flex-end;
+                margin-top: 10px;
+            }
+
+            .email-container {
+                font-size: 12px;
+                padding: 2px 10px;
             }
 
             .goog-te-gadget {
-                display: none; /* Скрываем переводчик на мобильных для экономии места */
+                display: none;
+            }
+
+            .language-switcher {
+                margin-left: 0;
             }
         }
 
-        @media (max-width: 480px) {
+        /* Mobile optimization for 500px and below */
+        @media (max-width: 500px) {
+            .header-content {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                grid-template-areas: 
+                    "logo nav contact"
+                    "menu menu menu";
+                align-items: center;
+                gap: 5px;
+            }
+
+            .logo {
+                grid-area: logo;
+            }
+
+            .main-nav {
+                grid-area: nav;
+                justify-self: end;
+            }
+
+            .contact-info {
+                grid-area: contact;
+                justify-self: end;
+                margin: 0;
+                width: auto;
+                order: 0;
+            }
+
+            .mobile-menu-btn {
+                grid-area: menu;
+                justify-self: center;
+                /* margin-top: 10px; */
+            }
+
             .logo img {
-                height: 65px;
+                height: 60px;
+            }
+
+            .contact-info {
+                gap: 2px;
+                flex-wrap: nowrap;
             }
             
-            .contact-info a.Email {
-                font-size: 14px;
+            .email-container {
+                font-size: 11px;
+                padding: 5px 8px;
+                white-space: nowrap;
             }
-        }
-
-      .language-switcher {
-            position: relative;
-            margin-left: 20px;
-        }
-        
-        .lang-btn {
-            background: #f8f8f8;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-family: 'Montserrat', Arial, sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-        
-        .lang-btn:hover {
-            background: #fff;
-            border-color: #803d3b;
-        }
-        
-        .lang-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            display: none;
-            z-index: 1000;
-            min-width: 150px;
-        }
-        
-        .lang-dropdown.show {
-            display: block;
-        }
-        
-        .lang-option {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #3e3232;
-            transition: background 0.3s;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .lang-option:last-child {
-            border-bottom: none;
-        }
-        
-        .lang-option:hover {
-            background: #f8f8f8;
-            color: #803d3b;
-        }
-        
-        .lang-option.current {
-            background: #803d3b;
-            color: #fff;
-        }
-        
-        @media (max-width: 768px) {
-            .language-switcher {
-                margin-left: 10px;
+            
+            .email-container span:last-child {
+                display: none; /* Скрываем текст email на очень маленьких экранах */
             }
             
             .lang-btn {
-                padding: 6px 12px;
-                font-size: 13px;
+                padding: 5px 8px;
+                font-size: 11px;
+                white-space: nowrap;
+            }
+
+            .lang-btn span {
+                display: none; /* Скрываем текст "Русский" на очень маленьких экранах */
+            }
+
+            .lang-btn::before {
+                content: "🇷🇺";
+            }
+        }
+
+        @media (max-width: 380px) {
+            .logo img {
+                height: 50px;
+            }
+            
+            .email-container {
+                padding: 2px 6px;
+            }
+            
+            .email-icon {
+                font-size: 14px;
             }
         }
     </style>
@@ -349,6 +447,7 @@
                     <div class="logo">
                         <a href="/">
                             <img src="{% static 'img/logos.jpeg' %}" alt="Нефтегазтехника">
+                            <!-- <img src="./WhatsApp_Image_2025-10-01_at_14.18.20-removebg-preview.png" alt="Нефтегазтехника"> -->
                         </a>
                     </div>
                     
@@ -362,17 +461,20 @@
                     </nav>
                     
                     <div class="contact-info">
-                        <a href="mailto:info@neftegastechnika.com" class="Email">Email: info@neftegastechnika.com</a>
+                        <a href="mailto:info@neftegastechnika.com" class="email-container">
+                            <span class="email-icon">✉</span>
+                            <span>info@neftegastechnika.com</span>
+                        </a>
                         
                         <!-- Переключатель языков -->
                         <div class="language-switcher">
                             <button class="lang-btn">
-                                🇷🇺 Русский ▼
+                                <span>RU Русский</span> ▼
                             </button>
                             <div class="lang-dropdown">
-                                <a href="/en/" class="lang-option">🇬🇧 English</a>
-                                <a href="/az/" class="lang-option">🇦🇿 Azərbaycan</a>
-                                <a href="/" class="lang-option current">🇷🇺 Русский</a>
+                                <a href="/en/" class="lang-option">EN English</a>
+                                <a href="/az/" class="lang-option">AZ Azərbaycan</a>
+                                <a href="/" class="lang-option current">RU Русский</a>
                             </div>
                         </div>
                         
