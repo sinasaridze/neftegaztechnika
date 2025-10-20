@@ -582,110 +582,116 @@
                 
                 modalTitle.textContent = productData.name;
                 modalDescription.textContent = productData.description || 'Təsvir yoxdur';
-                modalFeatures.textContent = productData.features || 'Xüsusiyyətlər yoxdur';
-                modalApplication.textContent = productData.application || 'Tətbiq sahəsi göstərilməyib';
+                modalFeatures.innerHTML = (productData.features || 'Xüsusiyyətlər yoxdur')
+                .replace(/&lt;br&gt;/g, '<br>').replace(/\n/g, '<br>');
+                modalApplication.innerHTML = (productData.application || 'Tətbiq sahəsi göstərilməyib')
+                .replace(/&lt;br&gt;/g, '<br>').replace(/\n/g, '<br>');
                 
-                if (productData.image_url) {
-                    modalImage.querySelector('img').src = productData.image_url;
-                    modalImage.style.display = 'block';
-                } else {
-                    modalImage.style.display = 'none';
-                }
-                
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // "Yuxarı" düyməsi
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.style.display = 'block';
+            if (productData.image_url) {
+                modalImage.querySelector('img').src = productData.image_url;
+                modalImage.style.display = 'block';
             } else {
-                backToTopBtn.style.display = 'none';
+                modalImage.style.display = 'none';
             }
-        });
-
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Görünüş dəyişdirici
-        viewButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                viewButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                if (this.getAttribute('data-view') === 'list') {
-                    catalogGrid.classList.add('list-view');
-                } else {
-                    catalogGrid.classList.remove('list-view');
-                }
-            });
-        });
-
-        // Çeşidləmə
-        sortSelect.addEventListener('change', function() {
-            // Burada sıralama məntiqi tətbiq ediləcək
-            loadingIndicator.style.display = 'block';
             
-            // Simulyasiya üçün setTimeout
-            setTimeout(() => {
-                loadingIndicator.style.display = 'none';
-            }, 500);
-        });
-
-        // Filtrlər
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const category = this.getAttribute('data-category');
-                
-                // Burada filtrləmə məntiqi tətbiq ediləcək
-                loadingIndicator.style.display = 'block';
-                
-                // Simulyasiya üçün setTimeout
-                setTimeout(() => {
-                    loadingIndicator.style.display = 'none';
-                }, 500);
-            });
-        });
-
-        // Axtarış
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const searchTerm = searchInput.value.trim();
-            
-            if (searchTerm) {
-                loadingIndicator.style.display = 'block';
-                
-                // Burada axtarış məntiqi tətbiq ediləcək
-                setTimeout(() => {
-                    loadingIndicator.style.display = 'none';
-                }, 500);
-            }
-        });
-
-        // Seçilmişlər
-        document.querySelectorAll('.favorite-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const productId = this.getAttribute('data-id');
-                
-                // Burada seçilmişlər məntiqi tətbiq ediləcək
-            });
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         });
     });
+
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // --- Кнопка "Наверх" ---
+    window.addEventListener('scroll', function() {
+        backToTopBtn.style.display = window.pageYOffset > 300 ? 'block' : 'none';
+    });
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- Переключение вида ---
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            viewButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            if (this.getAttribute('data-view') === 'list') {
+                catalogGrid.classList.add('list-view');
+            } else {
+                catalogGrid.classList.remove('list-view');
+            }
+        });
+    });
+
+    // --- Фильтрация по категории ---
+    function filterCatalog() {
+        const activeCategory = document.querySelector('.filter-btn.active').getAttribute('data-category');
+        const searchValue = searchInput.value.toLowerCase();
+        const sortValue = sortSelect.value;
+
+        const items = Array.from(document.querySelectorAll('.catalog-item'));
+        
+        // Фильтр по категории и поиску
+        items.forEach(item => {
+            const name = item.querySelector('h3').textContent.toLowerCase();
+            const category = item.getAttribute('data-category');
+            const matchCategory = !activeCategory || category === activeCategory;
+            const matchSearch = !searchValue || name.includes(searchValue);
+
+            item.style.display = matchCategory && matchSearch ? 'block' : 'none';
+        });
+
+        // Сортировка (по имени или цене)
+        if(sortValue === 'name') {
+            items.sort((a,b) => a.querySelector('h3').textContent.localeCompare(b.querySelector('h3').textContent));
+        } else if(sortValue === 'price') {
+            items.sort((a,b) => {
+                const pa = parseFloat(a.getAttribute('data-price') || 0);
+                const pb = parseFloat(b.getAttribute('data-price') || 0);
+                return pa - pb;
+            });
+        }
+
+        items.forEach(item => catalogGrid.appendChild(item));
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            filterCatalog();
+        });
+    });
+
+    sortSelect.addEventListener('change', filterCatalog);
+
+    // --- Поиск с задержкой ---
+    let searchTimeout;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(filterCatalog, 300);
+    });
+
+    // --- Избранное ---
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const productId = this.getAttribute('data-id');
+            console.log('Избранное:', productId, this.classList.contains('active'));
+        });
+    });
+
+    // --- Инициализация ---
+    filterCatalog();
+});
 </script>
 {% endblock %}

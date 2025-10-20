@@ -568,105 +568,116 @@
                 
                 modalTitle.textContent = productData.name;
                 modalDescription.textContent = productData.description || 'No description available';
-                modalFeatures.textContent = productData.features || 'No features available';
-                modalApplication.textContent = productData.application || 'Application area not specified';
+                modalFeatures.innerHTML = (productData.features || 'No features available')
+                .replace(/&lt;br&gt;/g, '<br>').replace(/\n/g, '<br>');
+                modalApplication.innerHTML = (productData.application || 'Application area not specified')
+                .replace(/&lt;br&gt;/g, '<br>').replace(/\n/g, '<br>');
                 
-                if (productData.image_url) {
-                    modalImage.querySelector('img').src = productData.image_url;
-                    modalImage.style.display = 'block';
-                } else {
-                    modalImage.style.display = 'none';
-                }
-                
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // "Back to top" button
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.style.display = 'block';
+            if (productData.image_url) {
+                modalImage.querySelector('img').src = productData.image_url;
+                modalImage.style.display = 'block';
             } else {
-                backToTopBtn.style.display = 'none';
+                modalImage.style.display = 'none';
             }
-        });
-
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // View toggle
-        viewButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                viewButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                if (this.getAttribute('data-view') === 'list') {
-                    catalogGrid.classList.add('list-view');
-                } else {
-                    catalogGrid.classList.remove('list-view');
-                }
-            });
-        });
-
-        // Sorting
-        sortSelect.addEventListener('change', function() {
-            // Sorting logic can be added here
-            console.log('Sorting by:', this.value);
-        });
-
-        // Filtering
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const category = this.getAttribute('data-category');
-                
-                // Show loading indicator
-                loadingIndicator.style.display = 'block';
-                
-                // AJAX request for filtering can be added here
-                setTimeout(() => {
-                    // Update active button
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Hide loading indicator
-                    loadingIndicator.style.display = 'none';
-                }, 500);
-            });
-        });
-
-        // Favorites
-        document.querySelectorAll('.favorite-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const productId = this.getAttribute('data-id');
-                
-                // Saving to favorites can be added here
-                console.log('Favorite:', productId, this.classList.contains('active'));
-            });
-        });
-
-        // Search with delay
-        let searchTimeout;
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                searchForm.submit();
-            }, 1000);
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         });
     });
+
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // --- Кнопка "Наверх" ---
+    window.addEventListener('scroll', function() {
+        backToTopBtn.style.display = window.pageYOffset > 300 ? 'block' : 'none';
+    });
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- Переключение вида ---
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            viewButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            if (this.getAttribute('data-view') === 'list') {
+                catalogGrid.classList.add('list-view');
+            } else {
+                catalogGrid.classList.remove('list-view');
+            }
+        });
+    });
+
+    // --- Фильтрация по категории ---
+    function filterCatalog() {
+        const activeCategory = document.querySelector('.filter-btn.active').getAttribute('data-category');
+        const searchValue = searchInput.value.toLowerCase();
+        const sortValue = sortSelect.value;
+
+        const items = Array.from(document.querySelectorAll('.catalog-item'));
+        
+        // Фильтр по категории и поиску
+        items.forEach(item => {
+            const name = item.querySelector('h3').textContent.toLowerCase();
+            const category = item.getAttribute('data-category');
+            const matchCategory = !activeCategory || category === activeCategory;
+            const matchSearch = !searchValue || name.includes(searchValue);
+
+            item.style.display = matchCategory && matchSearch ? 'block' : 'none';
+        });
+
+        // Сортировка (по имени или цене)
+        if(sortValue === 'name') {
+            items.sort((a,b) => a.querySelector('h3').textContent.localeCompare(b.querySelector('h3').textContent));
+        } else if(sortValue === 'price') {
+            items.sort((a,b) => {
+                const pa = parseFloat(a.getAttribute('data-price') || 0);
+                const pb = parseFloat(b.getAttribute('data-price') || 0);
+                return pa - pb;
+            });
+        }
+
+        items.forEach(item => catalogGrid.appendChild(item));
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            filterCatalog();
+        });
+    });
+
+    sortSelect.addEventListener('change', filterCatalog);
+
+    // --- Поиск с задержкой ---
+    let searchTimeout;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(filterCatalog, 300);
+    });
+
+    // --- Избранное ---
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const productId = this.getAttribute('data-id');
+            console.log('Избранное:', productId, this.classList.contains('active'));
+        });
+    });
+
+    // --- Инициализация ---
+    filterCatalog();
+});
 </script>
 {% endblock %}

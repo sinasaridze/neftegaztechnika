@@ -550,130 +550,141 @@
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('productModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDescription = document.getElementById('modalDescription');
-        const modalFeatures = document.getElementById('modalFeatures');
-        const modalApplication = document.getElementById('modalApplication');
-        const modalImage = document.getElementById('modalImage');
-        const closeBtn = document.querySelector('.close-modal');
-        const backToTopBtn = document.getElementById('backToTop');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        const catalogGrid = document.getElementById('catalog-grid');
-        const viewButtons = document.querySelectorAll('.view-btn');
-        const sortSelect = document.getElementById('sort-select');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const searchForm = document.getElementById('search-form');
-        const searchInput = searchForm.querySelector('input[name="search"]');
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('productModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalFeatures = document.getElementById('modalFeatures');
+    const modalApplication = document.getElementById('modalApplication');
+    const modalImage = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.close-modal');
+    const backToTopBtn = document.getElementById('backToTop');
+    const catalogGrid = document.getElementById('catalog-grid');
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const favoriteButtons = document.querySelectorAll('.favorite-btn');
+    const sortSelect = document.getElementById('sort-select');
+    const searchInput = document.querySelector('.search-box input[name="search"]');
 
-        // Модальное окно
-        document.querySelectorAll('.btn-modal').forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = this.getAttribute('data-id');
-                const productData = JSON.parse(document.getElementById('product-data-' + productId).textContent);
-                
-                modalTitle.textContent = productData.name;
-                modalDescription.textContent = productData.description || 'Описание отсутствует';
-                modalFeatures.textContent = productData.features || 'Характеристики отсутствуют';
-                modalApplication.textContent = productData.application || 'Область применения не указана';
-                
-                if (productData.image_url) {
-                    modalImage.querySelector('img').src = productData.image_url;
-                    modalImage.style.display = 'block';
-                } else {
-                    modalImage.style.display = 'none';
-                }
-                
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Кнопка "Наверх"
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.style.display = 'block';
+    // --- Модалки ---
+    document.querySelectorAll('.btn-modal').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            const productData = JSON.parse(document.getElementById('product-data-' + productId).textContent);
+            
+            modalTitle.textContent = productData.name;
+            modalDescription.textContent = productData.description || 'Описание отсутствует';
+            modalFeatures.innerHTML = (productData.features || 'Характеристики отсутствуют')
+                .replace(/&lt;br&gt;/g, '<br>').replace(/\n/g, '<br>');
+            modalApplication.innerHTML = (productData.application || 'Область применения не указана')
+                .replace(/&lt;br&gt;/g, '<br>').replace(/\n/g, '<br>');
+            
+            if (productData.image_url) {
+                modalImage.querySelector('img').src = productData.image_url;
+                modalImage.style.display = 'block';
             } else {
-                backToTopBtn.style.display = 'none';
+                modalImage.style.display = 'none';
             }
-        });
-
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Переключение вида
-        viewButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                viewButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                if (this.getAttribute('data-view') === 'list') {
-                    catalogGrid.classList.add('list-view');
-                } else {
-                    catalogGrid.classList.remove('list-view');
-                }
-            });
-        });
-
-        // Сортировка
-        sortSelect.addEventListener('change', function() {
-            // Здесь можно добавить логику сортировки
-            console.log('Сортировка по:', this.value);
-        });
-
-        // Фильтрация
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const category = this.getAttribute('data-category');
-                
-                // Показать индикатор загрузки
-                loadingIndicator.style.display = 'block';
-                
-                // Здесь можно добавить AJAX запрос для фильтрации
-                setTimeout(() => {
-                    // Обновить активную кнопку
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Скрыть индикатор загрузки
-                    loadingIndicator.style.display = 'none';
-                }, 500);
-            });
-        });
-
-        // Избранное
-        document.querySelectorAll('.favorite-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const productId = this.getAttribute('data-id');
-                
-                // Здесь можно добавить сохранение в избранное
-                console.log('Избранное:', productId, this.classList.contains('active'));
-            });
-        });
-
-        // Поиск с задержкой
-        let searchTimeout;
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                searchForm.submit();
-            }, 1000);
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         });
     });
+
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // --- Кнопка "Наверх" ---
+    window.addEventListener('scroll', function() {
+        backToTopBtn.style.display = window.pageYOffset > 300 ? 'block' : 'none';
+    });
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- Переключение вида ---
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            viewButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            if (this.getAttribute('data-view') === 'list') {
+                catalogGrid.classList.add('list-view');
+            } else {
+                catalogGrid.classList.remove('list-view');
+            }
+        });
+    });
+
+    // --- Фильтрация по категории ---
+    function filterCatalog() {
+        const activeCategory = document.querySelector('.filter-btn.active').getAttribute('data-category');
+        const searchValue = searchInput.value.toLowerCase();
+        const sortValue = sortSelect.value;
+
+        const items = Array.from(document.querySelectorAll('.catalog-item'));
+        
+        // Фильтр по категории и поиску
+        items.forEach(item => {
+            const name = item.querySelector('h3').textContent.toLowerCase();
+            const category = item.getAttribute('data-category');
+            const matchCategory = !activeCategory || category === activeCategory;
+            const matchSearch = !searchValue || name.includes(searchValue);
+
+            item.style.display = matchCategory && matchSearch ? 'block' : 'none';
+        });
+
+        // Сортировка (по имени или цене)
+        if(sortValue === 'name') {
+            items.sort((a,b) => a.querySelector('h3').textContent.localeCompare(b.querySelector('h3').textContent));
+        } else if(sortValue === 'price') {
+            items.sort((a,b) => {
+                const pa = parseFloat(a.getAttribute('data-price') || 0);
+                const pb = parseFloat(b.getAttribute('data-price') || 0);
+                return pa - pb;
+            });
+        }
+
+        items.forEach(item => catalogGrid.appendChild(item));
+    }
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            filterCatalog();
+        });
+    });
+
+    sortSelect.addEventListener('change', filterCatalog);
+
+    // --- Поиск с задержкой ---
+    let searchTimeout;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(filterCatalog, 300);
+    });
+
+    // --- Избранное ---
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const productId = this.getAttribute('data-id');
+            console.log('Избранное:', productId, this.classList.contains('active'));
+        });
+    });
+
+    // --- Инициализация ---
+    filterCatalog();
+});
 </script>
+
 {% endblock %}
